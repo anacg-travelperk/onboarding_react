@@ -22,7 +22,6 @@ const CreateRecipe = () => {
 
 
     const handleRecipeChange = (e) => {
-        console.log(e)
         const { name, value } = e.target
         setRecipe((recipe) => ({
             ...recipe,
@@ -60,13 +59,13 @@ const CreateRecipe = () => {
         <div>
             <h1>New recipe:</h1>
             <form onSubmit={handleSubmit}>
-                <label for="name">Recipe name: </label>
+                <label htmlFor="name">Recipe name: </label>
                 <input name="name" type= "text" value={recipe.name} onChange={handleRecipeChange}/>
                 <br/>
-                <label for="description">Recipe description: </label>
+                <label htmlFor="description">Recipe description: </label>
                 <input name="description" type= "text" value={recipe.description} onChange={handleRecipeChange}/>
                 <br/>
-                <label for="ingredient">Ingredient: </label>
+                <label htmlFor="ingredient">Ingredient: </label>
                 <input name="ingredient" type= "text" value={ingredient} onChange={handleIngredientChange}/>
                 <button title="add one more ingredient" onClick={addIngredientToList} type="button">+</button> 
                 <ul>
