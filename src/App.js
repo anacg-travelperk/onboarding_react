@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import NavigationBar from './NavigationBar';
+import CreateRecipe from './CreateRecipe';
+import DisplayRecipe from './DisplayRecipe';
+import DisplayAllRecipes from './DisplayAllRecipes';
+import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
+  const [isDisplayView, setIsDisplayView] = useState(false)
+  const [isCreateView, setIsCreateView] = useState(false)
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NavigationBar/>
+      {isDisplayView && <DisplayAllRecipes/>}
+      {isCreateView && <CreateRecipe/>}
+      <DisplayRecipe id={15}/>
     </div>
   );
 }
