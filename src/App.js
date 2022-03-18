@@ -2,6 +2,7 @@ import './App.css';
 import NavigationBar from './NavigationBar';
 import CreateRecipe from './CreateRecipe';
 import DisplayRecipe from './DisplayRecipe';
+import SearchRecipe from './SearchRecipe';
 import DisplayAllRecipes from './DisplayAllRecipes';
 import { useState } from "react";
 import {
@@ -14,13 +15,15 @@ import {
 function App() {
   const [isDisplayView, setIsDisplayView] = useState(false)
   const [isCreateView, setIsCreateView] = useState(false)
+  const [isSearchView, setIsSearchView] = useState(true)
   
   return (
     <div>
       <NavigationBar/>
       {isDisplayView && <DisplayAllRecipes/>}
       {isCreateView && <CreateRecipe/>}
-      <DisplayRecipe id={15}/>
+      {isSearchView && <SearchRecipe/>}
+      {/* <DisplayRecipe id={15}/> */}
     </div>
   );
 }
