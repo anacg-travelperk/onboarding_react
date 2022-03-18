@@ -2,14 +2,18 @@ import React from "react";
 import { useState } from "react";
 const axios = require("axios")
 
-const submitRecipeInfo = async (recipe, ingredientList) => {
+const postRecipe = async (recipe, ingredientList) => {
     const ingredients = ingredientList.map(ingr => ({"name": ingr}))
-    const res = axios.post('http://localhost:8000/recipes/', {
-        name: recipe.name,
-        description: recipe.description,
-        ingredients: ingredients
-    })
-    return res
+    try {
+        const res = axios.post('http://localhost:8000/recipes/', {
+            name: recipe.name,
+            description: recipe.description,
+            ingredients: ingredients
+        })
+        return res
+    } catch(e) {
+        console.log("There is an error!")
+    }
 }
 
 const CreateRecipe = () => {
@@ -46,13 +50,15 @@ const CreateRecipe = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const response = await submitRecipeInfo(recipe, ingredientList)
-        if (response.status === 201) {
+        const res = await postRecipe(recipe, ingredientList)
+        if (res.status === 201) {
             setIngredient("")
             setIngredientList([])
             setRecipe({name: '',
             description: '',})
         }
+        //TODO:cover error case 
+
     }
 
     return(

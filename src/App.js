@@ -14,8 +14,8 @@ import {
 
 function App() {
   const [isDisplayView, setIsDisplayView] = useState(false)
-  const [isCreateView, setIsCreateView] = useState(false)
-  const [isSearchView, setIsSearchView] = useState(true)
+  const [isCreateView, setIsCreateView] = useState(true)
+  const [isSearchView, setIsSearchView] = useState(false)
   
   return (
     <div>
