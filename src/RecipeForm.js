@@ -1,29 +1,15 @@
 import React from "react";
 import { useState } from "react";
-const axios = require("axios")
 
-const postRecipe = async (recipe, ingredientList) => {
-    const ingredients = ingredientList.map(ingr => ({"name": ingr}))
-    try {
-        const res = axios.post('http://localhost:8000/recipes/', {
-            name: recipe.name,
-            description: recipe.description,
-            ingredients: ingredients
-        })
-        return res
-    } catch(e) {
-        console.log("There is an error!")
-    }
-}
 
-const CreateRecipe = () => {
-    const [recipe, setRecipe] = useState({
+ const RecipeForm = ({initialRecipe, submitHandler}) => {
+    const [recipe, setRecipe] = useState( {name: initialRecipe.name, description: initialRecipe.description} || {
         name: '',
         description: '',
     });
     const [ingredient, setIngredient] = useState("")
-    const [ingredientList, setIngredientList] = useState([])
-
+    const [ingredientList, setIngredientList] = useState( initialRecipe.ingredients.name || [])
+// TODO: map ingredients name into an array, otherwise initialRecipe 
 
     const handleRecipeChange = (e) => {
         const { name, value } = e.target
@@ -39,7 +25,7 @@ const CreateRecipe = () => {
     }
 
     const addIngredientToList = () => {
-        if (ingredient != ("")) {
+        if (ingredient !== ("")) {
             setIngredientList(() => ([
                 ...ingredientList,
                 ingredient,
@@ -48,22 +34,26 @@ const CreateRecipe = () => {
         }
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const res = await postRecipe(recipe, ingredientList)
-        if (res.status === 201) {
-            setIngredient("")
-            setIngredientList([])
-            setRecipe({name: '',
-            description: '',})
-        }
-        //TODO:cover error case 
-
+    const removeListedIngredient = (ingredientName) => {
+        setIngredientList(ingredientList.filter(ing => ing.name !== ingredientName))
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        submitHandler({recipe, ingredientList})
+    }
+
+    // const NewButton = () => {
+    //     if (isLoggedIn) {
+    //         return <button onClick={this.handleLogoutClick} />;
+    //       } else {
+    //         return <button onClick={this.handleLoginClick} />;
+    //       }
+    // }
 
     return(
         <div>
-            <h3>New recipe:</h3>
+            <h1>New recipe:</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Recipe name: </label>
                 <input name="name" type= "text" value={recipe.name} onChange={handleRecipeChange}/>
@@ -76,13 +66,20 @@ const CreateRecipe = () => {
                 <button title="add one more ingredient" onClick={addIngredientToList} type="button">+</button> 
                 <ul>
                     {ingredientList.map((value, index) => {
-                        return <li key={index}>{value}</li>
+                        return (
+                            <div>
+                                <li key={index}>{value}</li>
+                                <button>Edit</button>
+                                <button onClick={removeListedIngredient(value)}>Delete</button>
+                            </div>)
                     })}
                 </ul>
+                <button type="submit">Apply changes</button>
                 <button type="submit">Create</button>
+                {/* <NewButton/> */}
             </form>
         </div>
     )
 }
 
-export default CreateRecipe
+export default RecipeForm

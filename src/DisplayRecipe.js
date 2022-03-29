@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import IngredientList from "./IngredientList";
 const axios = require("axios")
 
 
@@ -24,15 +25,16 @@ const deleteRecipe = async (id) => {
 const DisplayRecipe = ({id}) => {
     const [recipe, setRecipe] = useState(null)
     const [isRecipeDeleted, setIsRecipeDeleted] = useState(false) 
-    
-    useEffect( async () => {    
+    const [isEditing, setIsEditing] = useState(false)
+
+    useEffect(async () => {
         const recipe = await getRecipe(id)
         setRecipe(recipe)
-      }, [])
+    }, [])
 
     const clickDelete = async () => {
-        const res = await deleteRecipe(id)        
-        if (res.status===204) {
+        const res = await deleteRecipe(id)
+        if (res.status === 204) {
             setRecipe(null)
             setIsRecipeDeleted(true)
         } else {
@@ -41,26 +43,35 @@ const DisplayRecipe = ({id}) => {
         }
     }
 
+    const saveRecipe = async () => {
+        setIsEditing(false)
+    }
+
     return (
         <div>
-        <div>{isRecipeDeleted && (
-            <p>Recipe deleted successfully!</p>
-            )}
-        </div>
-        <div>{recipe && (
+            <div>{isRecipeDeleted && <p>Recipe deleted successfully!</p>}</div>
             <div>
-                <h2>{recipe.name}</h2>
-                <p>description: {recipe.description}</p>
-                <p>ingredients:</p>
-                <ul>
-                    {recipe.ingredients.map((ingredient, index) => {
-                            return <li key={index}>{ingredient.name}</li>})
-                            }
-                </ul>
-                <button onClick={clickDelete}>Delete recipe</button>
+                {recipe && (
+                    <div>
+                        <h2>{recipe.name}</h2>
+                        <p>description: {recipe.description}</p>
+                        <IngredientList
+                            ingredients={recipe.ingredients}
+                            isEditing={isEditing}
+                        />
+                        <button onClick={clickDelete}>Delete recipe</button>
+
+                        {isEditing ? (
+                            <button onClick={saveRecipe}>Save changes</button>
+                        ) : (
+                            <button onClick={() => setIsEditing(true)}>
+                                Edit recipe
+                            </button>
+                        )}
+                    </div>
+                )}
             </div>
-            )
-        }</div>
+            <div>{isEditing && <form></form>}</div>
         </div>
     )
 }

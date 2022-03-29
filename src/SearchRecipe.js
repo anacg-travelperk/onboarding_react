@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "./SearchBar"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const SearchRecipe = () => {
     const [searchResult, setSearchResult] = useState(null)

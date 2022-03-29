@@ -18,6 +18,7 @@ const DisplayAllRecipes = () => {
     
     return (
         <div>
+            <h3>My recipes</h3>
             <ul>
                 {recipes.map((recipe, index) => {
                         return <li key={index}>{recipe.name}</li>

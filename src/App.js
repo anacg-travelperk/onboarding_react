@@ -4,6 +4,9 @@ import CreateRecipe from './CreateRecipe';
 import DisplayRecipe from './DisplayRecipe';
 import SearchRecipe from './SearchRecipe';
 import DisplayAllRecipes from './DisplayAllRecipes';
+import RecipeForm from './RecipeForm';
+import IngredientList from './IngredientList';
+import Recipe from './Recipe';
 import { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -14,16 +17,34 @@ import {
 
 function App() {
   const [isDisplayView, setIsDisplayView] = useState(false)
-  const [isCreateView, setIsCreateView] = useState(true)
+  const [isCreateView, setIsCreateView] = useState(false)
   const [isSearchView, setIsSearchView] = useState(false)
+
+  const recipe = {
+    "id": 20,
+    "name": "Lasa",
+    "description": "Cook it for 2 hours",
+    "ingredients": [
+        {
+            "name": "hola"
+        },
+        {
+            "name": "adios"
+        }
+    ]
+}
   
   return (
     <div>
       <NavigationBar/>
-      {isDisplayView && <DisplayAllRecipes/>}
       {isCreateView && <CreateRecipe/>}
+      {isDisplayView && <DisplayAllRecipes/>}
       {isSearchView && <SearchRecipe/>}
-      {/* <DisplayRecipe id={15}/> */}
+      <DisplayRecipe id={23}/>
+      {/* <Recipe id={23}/> */}
+      {/* <RecipeForm initialRecipe={recipe.name}/> */}
+      {/* <IngredientList/> */}
+
     </div>
   );
 }
