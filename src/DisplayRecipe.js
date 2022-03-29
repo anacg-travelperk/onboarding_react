@@ -33,6 +33,7 @@ const patchRecipe = async (id, recipe) => {
 
 const DisplayRecipe = ({ id }) => {
     const [recipe, setRecipe] = useState({})
+    // TODO: try initializing with empty array for ingredients. But, what will happen with the rendering, since it depends on the recipe to be empty?
     const [isRecipeDeleted, setIsRecipeDeleted] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
 
@@ -40,13 +41,6 @@ const DisplayRecipe = ({ id }) => {
         const recipe = await getRecipe(id)
         setRecipe(recipe)
     }, [])
-
-    useEffect(() => {
-        console.log(
-            '🚀 ~ file: DisplayRecipe.js ~ line 48 ~ DisplayRecipe ~ recipe',
-            JSON.stringify(recipe)
-        )
-    }, [recipe])
 
     const clickDelete = async () => {
         const res = await deleteRecipe(id)
@@ -59,15 +53,6 @@ const DisplayRecipe = ({ id }) => {
         }
     }
 
-    const saveRecipe = async () => {
-        const res = await patchRecipe(recipe.id, recipe)
-        if (res.status === 200) {
-            setIsEditing(false)
-        } else {
-            console.log('Unable to make the changes')
-        }
-    }
-
     const editRecipe = (e) => {
         e.preventDefault()
         const { name, value } = e.target
@@ -77,19 +62,15 @@ const DisplayRecipe = ({ id }) => {
         }))
     }
 
-    const updateIngredientList = (newIngredient) => {
+    const addIngredient = (newIngredient) => {
         const updatedIngredientList = [...recipe.ingredients, newIngredient]
-        console.log(
-            '🚀 ~ file: DisplayRecipe.js ~ line 74 ~ updateIngredientList ~ updatedIngredients',
-            updatedIngredientList
-        )
         setRecipe((previousState) => ({
             ...previousState,
             ingredients: updatedIngredientList,
         }))
     }
 
-    const removeRecipeIngredient = (name) => {
+    const removeIngredient = (name) => {
         const updatedIngredientList = recipe.ingredients.filter(
             (ingredient) => ingredient.name !== name
         )
@@ -97,6 +78,15 @@ const DisplayRecipe = ({ id }) => {
             ...previousState,
             ingredients: updatedIngredientList,
         }))
+    }
+
+    const saveRecipe = async () => {
+        const res = await patchRecipe(recipe.id, recipe)
+        if (res.status === 200) {
+            setIsEditing(false)
+        } else {
+            console.log('Unable to make the changes')
+        }
     }
 
     return (
@@ -123,12 +113,8 @@ const DisplayRecipe = ({ id }) => {
                                 <IngredientList
                                     recipe={recipe}
                                     isEditing={isEditing}
-                                    updateRecipeIngredients={
-                                        updateIngredientList
-                                    }
-                                    removeRecipeIngredient={
-                                        removeRecipeIngredient
-                                    }
+                                    addIngredient={addIngredient}
+                                    removeIngredient={removeIngredient}
                                 />
                                 <button onClick={saveRecipe}>
                                     Save changes
@@ -141,12 +127,8 @@ const DisplayRecipe = ({ id }) => {
                                 <IngredientList
                                     recipe={recipe}
                                     isEditing={isEditing}
-                                    updateRecipeIngredients={
-                                        updateIngredientList
-                                    }
-                                    removeRecipeIngredient={
-                                        removeRecipeIngredient
-                                    }
+                                    addIngredient={addIngredient}
+                                    removeIngredient={removeIngredient}
                                 />
                                 <button onClick={clickDelete}>
                                     Delete recipe

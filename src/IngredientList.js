@@ -5,15 +5,15 @@ import NewIngredientForm from './NewIngredientForm'
 const IngredientList = ({
     recipe,
     isEditing,
-    updateRecipeIngredients,
-    removeRecipeIngredient,
+    addIngredient,
+    removeIngredient,
 }) => {
     const add = (newIngredient) => {
-        updateRecipeIngredients(newIngredient)
+        addIngredient(newIngredient)
     }
 
     const remove = ({ name }) => {
-        removeRecipeIngredient(name)
+        removeIngredient(name)
     }
 
     return (
