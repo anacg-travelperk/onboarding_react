@@ -1,33 +1,35 @@
-import React from "react";
-import { useState } from "react";
-import Ingredient from "./Ingredient";
-import NewIngredientForm from "./NewIngredientForm";
+import React from 'react'
+import Ingredient from './Ingredient'
+import NewIngredientForm from './NewIngredientForm'
 
-const IngredientList = ({ ingredients, isEditing }) => {
-    const [ingredientList, setIngredientList] = useState(ingredients)
-
+const IngredientList = ({
+    recipe,
+    isEditing,
+    updateRecipeIngredients,
+    removeRecipeIngredient,
+}) => {
     const add = (newIngredient) => {
-        setIngredientList([...ingredientList, newIngredient])
+        updateRecipeIngredients(newIngredient)
     }
 
-    const removeIngredient = ({ name }) => {
-        setIngredientList(
-            ingredientList.filter((ingredient) => ingredient.name !== name)
-        )
+    const remove = ({ name }) => {
+        removeRecipeIngredient(name)
     }
 
     return (
         <div>
             <h3>Ingredients</h3>
             {isEditing && <NewIngredientForm onNewIngredient={add} />}
-            {ingredientList.map((ingredient) => (
-                <Ingredient
-                    key={ingredient.name}
-                    ingredient={ingredient}
-                    onRemove={removeIngredient}
-                    isEditing={isEditing}
-                />
-            ))}
+
+            {recipe.ingredients &&
+                recipe.ingredients.map((ingredient) => (
+                    <Ingredient
+                        key={ingredient.name}
+                        ingredient={ingredient}
+                        onRemove={remove}
+                        isEditing={isEditing}
+                    />
+                ))}
         </div>
     )
 }

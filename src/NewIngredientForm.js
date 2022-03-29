@@ -25,9 +25,11 @@ const NewIngredientForm = ({ onNewIngredient }) => {
                 value={newIngredient.name}
                 onChange={setName}
             />
-            <button onClick={handleSubmit}>Add Ingredient</button>
+            <button type="submit">Add Ingredient</button>
         </form>
     )
 }
+
+// TODO: avoid adding an empty ingredient
 
 export default NewIngredientForm 
