@@ -1,35 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import IngredientList from "./IngredientList";
-const axios = require("axios")
-
-
-const getRecipe = async (id) => {
-    try {
-        const res = await axios.get(`http://localhost:8000/recipes/${id}/`)
-        return res.data
-    } catch(e) {
-        console.log("There is an error!")
-    }
-}
-
-const deleteRecipe = async (id) => {
-    try {
-        const res = await axios.delete(`http://localhost:8000/recipes/${id}/`)
-        return res
-    } catch(e) {
-        return (e)
-    }
-}
-
-const patchRecipe = async (id, recipe) => {
-    try {
-        const res = await axios.patch(`http://localhost:8000/recipes/${id}/`, recipe)
-        return res
-    } catch(e) {
-        return (e)
-    }
-}
+import { getRecipe, deleteRecipe, patchRecipe } from './api'
 
 const DisplayRecipe = ({ id }) => {
     const [recipe, setRecipe] = useState({})

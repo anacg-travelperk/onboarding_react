@@ -1,29 +1,14 @@
 import React from "react";
 import { useState } from "react";
-const axios = require("axios")
-
-const postRecipe = async (recipe, ingredientList) => {
-    const ingredients = ingredientList.map(ingr => ({"name": ingr}))
-    try {
-        const res = axios.post('http://localhost:8000/recipes/', {
-            name: recipe.name,
-            description: recipe.description,
-            ingredients: ingredients
-        })
-        return res
-    } catch(e) {
-        console.log("There is an error!")
-    }
-}
+import { postRecipe } from './api'
 
 const CreateRecipe = () => {
     const [recipe, setRecipe] = useState({
         name: '',
         description: '',
-    });
-    const [ingredient, setIngredient] = useState("")
+    })
+    const [ingredient, setIngredient] = useState('')
     const [ingredientList, setIngredientList] = useState([])
-
 
     const handleRecipeChange = (e) => {
         const { name, value } = e.target
@@ -39,12 +24,9 @@ const CreateRecipe = () => {
     }
 
     const addIngredientToList = () => {
-        if (ingredient != ("")) {
-            setIngredientList(() => ([
-                ...ingredientList,
-                ingredient,
-            ]))
-            setIngredient("")
+        if (ingredient != '') {
+            setIngredientList(() => [...ingredientList, ingredient])
+            setIngredient('')
         }
     }
 
@@ -52,28 +34,48 @@ const CreateRecipe = () => {
         e.preventDefault()
         const res = await postRecipe(recipe, ingredientList)
         if (res.status === 201) {
-            setIngredient("")
+            setIngredient('')
             setIngredientList([])
-            setRecipe({name: '',
-            description: '',})
+            setRecipe({ name: '', description: '' })
+        } else {
+            console.log('Could not post the recipe')
         }
-        //TODO:cover error case 
-
     }
 
-    return(
+    return (
         <div>
             <h3>New recipe:</h3>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Recipe name: </label>
-                <input name="name" type= "text" value={recipe.name} onChange={handleRecipeChange}/>
-                <br/>
+                <input
+                    name="name"
+                    type="text"
+                    value={recipe.name}
+                    onChange={handleRecipeChange}
+                />
+                <br />
                 <label htmlFor="description">Recipe description: </label>
-                <input name="description" type= "text" value={recipe.description} onChange={handleRecipeChange}/>
-                <br/>
+                <input
+                    name="description"
+                    type="text"
+                    value={recipe.description}
+                    onChange={handleRecipeChange}
+                />
+                <br />
                 <label htmlFor="ingredient">Ingredient: </label>
-                <input name="ingredient" type= "text" value={ingredient} onChange={handleIngredientChange}/>
-                <button title="add one more ingredient" onClick={addIngredientToList} type="button">+</button> 
+                <input
+                    name="ingredient"
+                    type="text"
+                    value={ingredient}
+                    onChange={handleIngredientChange}
+                />
+                <button
+                    title="add one more ingredient"
+                    onClick={addIngredientToList}
+                    type="button"
+                >
+                    +
+                </button>
                 <ul>
                     {ingredientList.map((value, index) => {
                         return <li key={index}>{value}</li>
