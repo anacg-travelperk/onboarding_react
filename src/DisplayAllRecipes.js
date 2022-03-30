@@ -21,7 +21,7 @@ const DisplayAllRecipes = () => {
             <h3>My recipes</h3>
             <ul>
                 {recipes.map((recipe, index) => {
-                        return <li key={index}>{recipe.name}</li>
+                        return <a key={index}>{recipe.name}</a>
                 })}
             </ul>
         </div>

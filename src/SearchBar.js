@@ -1,15 +1,7 @@
 import React from "react";
 import { useState } from "react";
-const axios = require("axios")
+import { getSearch } from './api'
 
-const getSearch = async (searchTerm) => {
-    try {
-        const res = await axios.get(`http://localhost:8000/recipes/?name=${searchTerm}`)
-        return res
-    } catch(e) {
-        console.log("There is an error!")
-    }
-}
 
 const SearchBar = ({onResult}) => {
     const [searchTerm, setSearchTerm] = useState("")

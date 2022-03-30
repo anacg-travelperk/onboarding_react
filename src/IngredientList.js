@@ -3,7 +3,7 @@ import Ingredient from './Ingredient'
 import NewIngredientForm from './NewIngredientForm'
 
 const IngredientList = ({
-    recipe,
+    recipe = { ingredients: [] },
     isEditing,
     addIngredient,
     removeIngredient,

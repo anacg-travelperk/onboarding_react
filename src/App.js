@@ -1,51 +1,22 @@
-import './App.css';
-import NavigationBar from './NavigationBar';
-import CreateRecipe from './CreateRecipe';
-import DisplayRecipe from './DisplayRecipe';
-import SearchRecipe from './SearchRecipe';
-import DisplayAllRecipes from './DisplayAllRecipes';
-import RecipeForm from './RecipeForm';
-import IngredientList from './IngredientList';
-import Recipe from './Recipe';
-import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import './App.css'
+import CreateRecipe from './CreateRecipe'
+import DisplayRecipe from './DisplayRecipe'
+import DisplayAllRecipes from './DisplayAllRecipes'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 function App() {
-  const [isDisplayView, setIsDisplayView] = useState(true)
-  const [isCreateView, setIsCreateView] = useState(false)
-  const [isSearchView, setIsSearchView] = useState(false)
-
-  const recipe = {
-      id: 20,
-      name: 'Lasa',
-      description: 'Cook it for 2 hours',
-      ingredients: [
-          {
-              name: 'hola',
-          },
-          {
-              name: 'adios',
-          },
-      ],
-  }
-
-  return (
-      <div>
-          <NavigationBar />
-          {isCreateView && <CreateRecipe />}
-          {isDisplayView && <DisplayAllRecipes />}
-          {isSearchView && <SearchRecipe />}
-          {/* <DisplayRecipe id={23}/> */}
-          {/* <Recipe id={23}/> */}
-          {/* <RecipeForm initialRecipe={recipe.name}/> */}
-          {/* <IngredientList/> */}
-      </div>
-  )
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<DisplayAllRecipes />} />
+                    <Route path="/recipes" element={<DisplayAllRecipes />} />
+                    <Route path="/new" element={<CreateRecipe />} />
+                </Routes>
+            </BrowserRouter>
+            {/* <DisplayRecipe id={39} />  */}
+        </div>
+    )
 }
 
-export default App;
+export default App

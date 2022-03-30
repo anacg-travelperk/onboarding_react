@@ -5,7 +5,6 @@ import { getRecipe, deleteRecipe, patchRecipe } from './api'
 
 const DisplayRecipe = ({ id }) => {
     const [recipe, setRecipe] = useState({})
-    // TODO: try initializing with empty array for ingredients. But, what will happen with the rendering, since it depends on the recipe to be empty?
     const [isRecipeDeleted, setIsRecipeDeleted] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
 
@@ -17,10 +16,10 @@ const DisplayRecipe = ({ id }) => {
     const clickDelete = async () => {
         const res = await deleteRecipe(id)
         if (res.status === 204) {
-            setRecipe(null)
+            setRecipe({})
             setIsRecipeDeleted(true)
         } else {
-            setRecipe(null)
+            setRecipe({})
             setIsRecipeDeleted(false)
         }
     }
@@ -63,56 +62,59 @@ const DisplayRecipe = ({ id }) => {
 
     return (
         <>
-            <div>{isRecipeDeleted && <p>Recipe deleted successfully!</p>}</div>
-            <div>
-                {recipe && (
-                    <>
-                        {isEditing ? (
-                            <div>
-                                <label>Recipe name</label>
-                                <input
-                                    name="name"
-                                    value={recipe.name}
-                                    onChange={editRecipe}
-                                ></input>
-                                <br />
-                                <label>Recipe description</label>
-                                <input
-                                    name="description"
-                                    value={recipe.description}
-                                    onChange={editRecipe}
-                                ></input>
-                                <IngredientList
-                                    recipe={recipe}
-                                    isEditing={isEditing}
-                                    addIngredient={addIngredient}
-                                    removeIngredient={removeIngredient}
-                                />
-                                <button onClick={saveRecipe}>
-                                    Save changes
-                                </button>
-                            </div>
-                        ) : (
-                            <>
-                                <h2>{recipe.name}</h2>
-                                <p>description: {recipe.description}</p>
-                                <IngredientList
-                                    recipe={recipe}
-                                    isEditing={isEditing}
-                                    addIngredient={addIngredient}
-                                    removeIngredient={removeIngredient}
-                                />
-                                <button onClick={clickDelete}>
-                                    Delete recipe
-                                </button>
-                                <button onClick={() => setIsEditing(true)}>
-                                    Edit recipe
-                                </button>
-                            </>
-                        )}
-                    </>
-                )}
-            </div>
+            {isRecipeDeleted ? (
+                <p>Recipe deleted successfully!</p>
+            ) : (
+                <>
+                    {recipe && (
+                        <>
+                            {isEditing ? (
+                                <div>
+                                    <label>Recipe name</label>
+                                    <input
+                                        name="name"
+                                        value={recipe.name}
+                                        onChange={editRecipe}
+                                    ></input>
+                                    <br />
+                                    <label>Recipe description</label>
+                                    <input
+                                        name="description"
+                                        value={recipe.description}
+                                        onChange={editRecipe}
+                                    ></input>
+                                    <IngredientList
+                                        recipe={recipe}
+                                        isEditing={isEditing}
+                                        addIngredient={addIngredient}
+                                        removeIngredient={removeIngredient}
+                                    />
+                                    <button onClick={saveRecipe}>
+                                        Save changes
+                                    </button>
+                                </div>
+                            ) : (
+                                <>
+                                    <h2>{recipe.name}</h2>
+                                    <p>description: {recipe.description}</p>
+                                    <IngredientList
+                                        recipe={recipe}
+                                        isEditing={isEditing}
+                                        addIngredient={addIngredient}
+                                        removeIngredient={removeIngredient}
+                                    />
+                                    <button onClick={clickDelete}>
+                                        Delete recipe
+                                    </button>
+                                    <button onClick={() => setIsEditing(true)}>
+                                        Edit recipe
+                                    </button>
+                                </>
+                            )}
+                        </>
+                    )}
+                </>
+            )}
         </>
     )
 }

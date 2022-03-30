@@ -43,3 +43,14 @@ export const postRecipe = async (recipe, ingredientList) => {
         console.log('There is an error!')
     }
 }
+
+export const getSearch = async (searchTerm) => {
+    try {
+        const res = await axios.get(
+            `http://localhost:8000/recipes/?name=${searchTerm}`
+        )
+        return res
+    } catch (e) {
+        console.log('There is an error!')
+    }
+}
