@@ -17,6 +17,7 @@ const SearchBar = ({onResult}) => {
         if (res.status===200) {
             const searchResult = res.data
             onResult(searchResult)
+            setSearchTerm('')
         } else {
             console.log("There is an error!")
         }

@@ -9,6 +9,11 @@ export const getRecipe = async (id) => {
     }
 }
 
+export const getRecipes = async () => {
+    const res = await axios.get('http://localhost:8000/recipes/')
+    return res.data
+}
+
 export const deleteRecipe = async (id) => {
     try {
         const res = await axios.delete(`http://localhost:8000/recipes/${id}/`)
