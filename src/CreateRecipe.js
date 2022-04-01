@@ -1,6 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import React from 'react'
+import { useState } from 'react'
 import { postRecipe } from './api'
+import { Link, useHistory } from 'react-router-dom'
 
 const CreateRecipe = () => {
     const [recipe, setRecipe] = useState({
@@ -9,6 +10,8 @@ const CreateRecipe = () => {
     })
     const [ingredient, setIngredient] = useState('')
     const [ingredientList, setIngredientList] = useState([])
+    const [errorMessage, setErrorMessage] = useState('')
+    const history = useHistory()
 
     const handleRecipeChange = (e) => {
         const { name, value } = e.target
@@ -32,18 +35,25 @@ const CreateRecipe = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const res = await postRecipe(recipe, ingredientList)
-        if (res.status === 201) {
-            setIngredient('')
-            setIngredientList([])
-            setRecipe({ name: '', description: '' })
-        } else {
-            console.log('Could not post the recipe')
+        try {
+            const res = await postRecipe(recipe, ingredientList)
+            if (res.status === 201) {
+                setIngredient('')
+                setIngredientList([])
+                setRecipe({ name: '', description: '' })
+                const newRecipeId = res.data.id
+                history.push(`/recipes/${newRecipeId}`)
+            }
+        } catch (e) {
+            setErrorMessage(
+                'Could not post the recipe. Try filling in all fields'
+            )
         }
     }
 
     return (
         <div>
+            <Link to="/recipes">See all recipes</Link>
             <h3>New recipe:</h3>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Recipe name: </label>
@@ -76,6 +86,7 @@ const CreateRecipe = () => {
                 >
                     +
                 </button>
+                {errorMessage && <p className="errorMessage">{errorMessage}</p>}
                 <ul>
                     {ingredientList.map((value, index) => {
                         return <li key={index}>{value}</li>

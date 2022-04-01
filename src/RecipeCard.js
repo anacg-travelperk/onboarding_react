@@ -1,9 +1,11 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import IngredientList from "./IngredientList";
+import React from 'react'
+import { useState, useEffect } from 'react'
+import IngredientList from './IngredientList'
 import { getRecipe, deleteRecipe, patchRecipe } from './api'
+import { Link, useParams } from 'react-router-dom'
 
-const DisplayRecipe = ({ id }) => {
+const RecipeCard = () => {
+    const { id } = useParams()
     const [recipe, setRecipe] = useState({})
     const [isRecipeDeleted, setIsRecipeDeleted] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
@@ -115,7 +117,8 @@ const DisplayRecipe = ({ id }) => {
                     )}
                 </>
             )}
+            <Link to="/recipes">See all recipes</Link>
         </>
     )
 }
-export default DisplayRecipe
+export default RecipeCard

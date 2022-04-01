@@ -3,9 +3,9 @@ import { useState } from "react";
 import { getSearch } from './api'
 
 
-const SearchBar = ({onResult}) => {
-    const [searchTerm, setSearchTerm] = useState("")
-    
+const SearchBar = ({ onResult, setIsSearchDisplay }) => {
+    const [searchTerm, setSearchTerm] = useState('')
+
     const handleSearchChange = (e) => {
         const input = e.target.value
         setSearchTerm(input)
@@ -14,20 +14,25 @@ const SearchBar = ({onResult}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const res = await getSearch(searchTerm)
-        if (res.status===200) {
+        if (res.status === 200) {
             const searchResult = res.data
             onResult(searchResult)
+            setIsSearchDisplay(true)
             setSearchTerm('')
         } else {
-            console.log("There is an error!")
+            console.log('There is an error!')
         }
-
     }
     return (
         <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Search for term:</label>
-        <input name="searchTerm" type="text" value={searchTerm} onChange={handleSearchChange}></input>
-        <button type="submit">Search</button>
+            <label htmlFor="name">Search for term:</label>
+            <input
+                name="searchTerm"
+                type="text"
+                value={searchTerm}
+                onChange={handleSearchChange}
+            ></input>
+            <button type="submit">Search</button>
         </form>
     )
 }
