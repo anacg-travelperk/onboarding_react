@@ -5,8 +5,6 @@ import RecipesView from './RecipesView'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 function App() {
-    const id = 49
-
     return (
         <div className="App">
             <BrowserRouter>

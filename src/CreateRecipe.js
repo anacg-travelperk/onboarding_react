@@ -56,24 +56,27 @@ const CreateRecipe = () => {
             <Link to="/recipes">See all recipes</Link>
             <h3>New recipe:</h3>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Recipe name: </label>
+                <label htmlFor="name">Recipe name:</label>
                 <input
+                    id="name"
                     name="name"
                     type="text"
                     value={recipe.name}
                     onChange={handleRecipeChange}
                 />
                 <br />
-                <label htmlFor="description">Recipe description: </label>
+                <label htmlFor="description">Recipe description:</label>
                 <input
+                    id="description"
                     name="description"
                     type="text"
                     value={recipe.description}
                     onChange={handleRecipeChange}
                 />
                 <br />
-                <label htmlFor="ingredient">Ingredient: </label>
+                <label htmlFor="ingredient">Ingredient:</label>
                 <input
+                    id="ingredient"
                     name="ingredient"
                     type="text"
                     value={ingredient}

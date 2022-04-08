@@ -25,8 +25,9 @@ const SearchBar = ({ onResult, setIsSearchDisplay }) => {
     }
     return (
         <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Search for term:</label>
+            <label htmlFor="search">Search for term:</label>
             <input
+                id="search"
                 name="searchTerm"
                 type="text"
                 value={searchTerm}

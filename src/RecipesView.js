@@ -23,7 +23,8 @@ const RecipesView = () => {
                 onResult={setRecipes}
                 setIsSearchDisplay={setIsSearchDisplay}
             />
-            {recipes && recipes.length === 0 && (
+            {!recipes && <p>No recipes found</p>}
+            {isSearchDisplay && recipes.length === 0 && (
                 <p>No results for that search</p>
             )}
             {recipes && (

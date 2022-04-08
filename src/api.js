@@ -5,13 +5,17 @@ export const getRecipe = async (id) => {
         const res = await axios.get(`http://localhost:8000/recipes/${id}/`)
         return res.data
     } catch (e) {
-        console.log('There is an error!')
+        console.error(e)
     }
 }
 
 export const getRecipes = async () => {
-    const res = await axios.get('http://localhost:8000/recipes/')
-    return res.data
+    try {
+        const res = await axios.get('http://localhost:8000/recipes/')
+        return res.data
+    } catch (e) {
+        console.error(e)
+    }
 }
 
 export const deleteRecipe = async (id) => {
@@ -19,7 +23,7 @@ export const deleteRecipe = async (id) => {
         const res = await axios.delete(`http://localhost:8000/recipes/${id}/`)
         return res
     } catch (e) {
-        return e
+        console.error(e)
     }
 }
 
@@ -31,7 +35,7 @@ export const patchRecipe = async (id, recipe) => {
         )
         return res
     } catch (e) {
-        return e
+        console.error(e)
     }
 }
 
@@ -45,7 +49,7 @@ export const postRecipe = async (recipe, ingredientList) => {
         })
         return res
     } catch (e) {
-        console.log('There is an error!')
+        console.error(e)
     }
 }
 
@@ -56,6 +60,6 @@ export const getSearch = async (searchTerm) => {
         )
         return res
     } catch (e) {
-        console.log('There is an error!')
+        console.error(e)
     }
 }

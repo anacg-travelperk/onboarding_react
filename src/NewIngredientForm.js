@@ -19,6 +19,7 @@ const NewIngredientForm = ({ onNewIngredient }) => {
         <form onSubmit={handleSubmit}>
             <label htmlFor="name">New Ingredient</label>
             <input
+                id="name"
                 name="name"
                 type="text"
                 placeholder="New Ingredient"
@@ -29,7 +30,4 @@ const NewIngredientForm = ({ onNewIngredient }) => {
         </form>
     )
 }
-
-// TODO: avoid adding an empty ingredient
-
 export default NewIngredientForm 

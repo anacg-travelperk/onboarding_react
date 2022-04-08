@@ -18,12 +18,11 @@ const RecipeCard = () => {
     const clickDelete = async () => {
         const res = await deleteRecipe(id)
         if (res.status === 204) {
-            setRecipe({})
             setIsRecipeDeleted(true)
         } else {
-            setRecipe({})
             setIsRecipeDeleted(false)
         }
+        setRecipe({})
     }
 
     const editRecipe = (e) => {
@@ -72,15 +71,21 @@ const RecipeCard = () => {
                         <>
                             {isEditing ? (
                                 <div>
-                                    <label>Recipe name</label>
+                                    <label htmlFor="recipeName">
+                                        Recipe name
+                                    </label>
                                     <input
+                                        id="recipeName"
                                         name="name"
                                         value={recipe.name}
                                         onChange={editRecipe}
                                     ></input>
                                     <br />
-                                    <label>Recipe description</label>
+                                    <label htmlFor="recipeDescription">
+                                        Recipe description
+                                    </label>
                                     <input
+                                        id="recipeDescription"
                                         name="description"
                                         value={recipe.description}
                                         onChange={editRecipe}
